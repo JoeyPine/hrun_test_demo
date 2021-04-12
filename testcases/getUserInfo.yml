@@ -1,0 +1,43 @@
+config:
+    name: 获取用户基本信息
+    base_url: ${ENV(BASE_URL)}
+    variables:
+#        openid: oRJoI69t26v8Kq6hUeFzm3OMEHFM
+        lang: zh_CN
+
+teststeps:
+-
+    name: 获取token
+    testcase: testcases/getToken.yml
+    extract:
+        - access_token
+-
+    name: 获取用户基本信息(UnionID机制)
+    api: api/getUserInfo.yml
+    variables:
+        openid: oRJoI69t26v8Kq6hUeFzm3OMEHFM
+    params:
+        access_token: $access_token
+        openid: $openid
+        lang: $lang
+    validate:
+        - eq: ["content.nickname","Song"]
+-
+    name: 无效openid
+    api: api/getUserInfo.yml
+    variables:
+        openid: 11111111
+    validate:
+        - eq: ["content.errcode",40003]
+-
+    name: 未传入access_token
+    api: api/getUserInfo.yml
+    variables:
+        access_token: 0
+        openid: oRJoI69t26v8Kq6hUeFzm3OMEHFM
+    validate:
+        - eq: ["content.errcode",41001]
+
+
+
+

@@ -1,0 +1,47 @@
+config:
+    name: 创建标签
+#    variables:
+#        createTagJson: {   "tag" : {     "name" : "song01"  } }
+    base_url: ${ENV(BASE_URL)}
+    export:
+        - access_token
+
+teststeps:
+-
+    name: 获取token
+    testcase: testcases/getToken.yml
+    extract:
+        - access_token
+-
+    name: 创建标签
+    api: api/createTag.yml
+    params:
+        access_token: $access_token
+    variables:
+        createTagJson: {   "tag" : {     "name" : "song01"  } }
+    json: $createTagJson
+    validate:
+        - eq: ["content.tag.name","song01"]
+-
+    name: 创建重名标签
+    api: api/createTag.yml
+    params:
+        access_token: $access_token
+    variables:
+        createTagJson: {   "tag" : {     "name" : "song01"  } }
+    json: $createTagJson
+    validate:
+        - eq: ["content.errcode",45157]
+-
+    name: 创建标签名超过30字节
+    api: api/createTag.yml
+    params:
+        access_token: $access_token
+    variables:
+        createTagJson: {   "tag" : {     "name" : "song01song01song01song01song011"  } }
+    json: $createTagJson
+    validate:
+        - eq: ["content.errcode",45158]
+
+
+

@@ -1,0 +1,11 @@
+name: 获取微信平台token
+base_url: ${ENV(BASE_URL)}
+request:
+  url: /cgi-bin/token
+  method: GET
+  params:
+    grant_type: $grant_type
+    appid: $appID
+    secret: $appsecret
+validate:
+  - eq: ["status_code", 200]

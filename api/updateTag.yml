@@ -1,0 +1,10 @@
+name: 获取微信平台token
+base_url: ${ENV(BASE_URL)}
+request:
+  url: /cgi-bin/tags/update
+  method: POST
+  params:
+    access_token: $access_token
+  json: $json
+validate:
+  - eq: ["status_code", 200]

@@ -1,0 +1,48 @@
+config:
+    name: 修改标签
+    variables:
+        appID: ${get_attr(appID)}
+        appsecret: ${get_attr(appsecret)}
+        grant_type: ${get_attr(grant_type)}
+        json: { "tag": { "id": 153,     "name": "test99" } }
+    base_url: ${ENV(BASE_URL)}
+#    setup_hooks:
+#        - ${setup_test_case(修改标签)}
+#    teardown_hooks:
+#        - ${teardown_test_case(修改标签)}
+    export:
+        - access_token
+
+teststeps:
+-
+    name: 获取token
+    testcase: testcases/getToken.yml
+#    setup_hooks:
+#        - ${setup_test_step(获取token)}
+#    teardown_hooks:
+#        - ${teardown_test_step(获取token)}
+    extract:
+        - access_token
+-
+    name: 修改标签
+    api: api/updateTag.yml
+#    setup_hooks:
+#        - ${setup_test_step(修改标签)}
+#    teardown_hooks:
+#        - ${teardown_test_step(修改标签)}
+    params:
+        access_token: $access_token
+    json: $json
+    validate:
+        - eq: ["content.errmsg","ok"]
+-
+  name: 查看修改的标签是否生效
+  api: api/getAllTag.yml
+  params:
+    access_token: $access_token
+  extract:
+      tag_name: content.tags.1.name
+  validate:
+    - eq: [$tag_name,"test99"]
+
+

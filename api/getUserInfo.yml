@@ -1,0 +1,11 @@
+name: 获取用户基本信息
+base_url: ${ENV(BASE_URL)}
+request:
+  method: GET
+  url: /cgi-bin/user/info
+  params:
+    access_token: $access_token
+    openid: $openid
+    lang: $lang
+validate:
+  - eq: ["status_code",200]

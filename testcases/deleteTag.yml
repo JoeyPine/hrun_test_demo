@@ -1,0 +1,36 @@
+config:
+    name: 删除标签
+    base_url: ${ENV(BASE_URL)}
+    export:
+        - access_token
+
+teststeps:
+-
+    name: 获取token
+    testcase: testcases/getToken.yml
+    extract:
+        - access_token
+-
+    name: 删除标签
+    api: api/deleteTag.yml
+    params:
+        access_token: $access_token
+    variables:
+        deleteTagJson: {   "tag":{        "id" : 215   } }
+    json: $deleteTagJson
+    validate:
+        - eq: ["content.errmsg","ok"]
+-
+    name: 创建重名标签
+    api: api/deleteTag.yml
+    params:
+        access_token: $access_token
+    variables:
+        deleteTagJson: {   "tag":{        "id" : 2   } }
+    json: $deleteTagJson
+    validate:
+        - eq: ["content.errcode",45058]
+
+
+
+

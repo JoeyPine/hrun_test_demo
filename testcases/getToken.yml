@@ -1,0 +1,24 @@
+config:
+    name: 获取token
+    variables:
+        appID: wx834a306b55370aa5
+        appsecret: 6dd19d35febb424e4dd4941e453693ee
+        grant_type: client_credential
+    base_url: "https://api.weixin.qq.com"
+    export:
+        - access_token
+
+teststeps:
+-
+    name: 获取token
+    api: api/getToken.yml
+    params:
+        grant_type: $grant_type
+        appid: $appID
+        secret: $appsecret
+    extract:
+        - access_token: content.access_token
+    validate:
+        - eq: ["status_code", 200]
+        - eq: ["content.expires_in",7200]
+

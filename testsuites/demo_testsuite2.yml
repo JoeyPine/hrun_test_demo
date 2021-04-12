@@ -1,0 +1,14 @@
+#测试用例集 ==>语法二
+config:
+    name: "demo testsuite"
+    base_url: "http://127.0.0.1:5000"
+
+testcases:
+  用例一:
+    testcase: path/to/demo_testcase.yml
+    variables:
+        device_sn: $device_sn
+  用例二:
+    testcase: path/to/demo_testcase.yml
+    variables:
+        device_sn: $device_sn

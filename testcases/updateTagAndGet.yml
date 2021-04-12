@@ -1,0 +1,21 @@
+config:
+    name: 修改标签后查看
+    base_url: ${ENV(BASE_URL)}
+    export:
+      - access_token
+
+teststeps:
+-
+    name: 修改标签
+    testcases: testcases/updateTag.yml
+    extract:
+      - access_token
+-
+    name: 查看修改的标签是否生效
+    api: api/getAllTag.yml
+    params:
+      access_token: $access_token
+    extract:
+        tag_name: content.tags.1.name
+    validate:
+      - eq: [$tag_name,"test99"]

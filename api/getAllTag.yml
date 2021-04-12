@@ -1,0 +1,9 @@
+name: 获取所有标签
+base_url: ${ENV(BASE_URL)}
+request:
+  url: /cgi-bin/tags/get
+  method: GET
+  params:
+    access_token: $access_token
+validate:
+  - eq: ["status_code", 200]

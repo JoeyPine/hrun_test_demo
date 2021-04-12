@@ -1,0 +1,18 @@
+config:
+  name: 获取百度响应信息
+  base_url: "https://www.baidu.com"
+
+teststeps:
+-
+  name: 获取百度响应
+  request:
+    method: GET
+    url: /
+  headers:
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36
+    Accept-Encoding: gzip, deflate, br
+    Accept-Language: zh-CN,zh;q=0.9
+  extract:
+    str: </t(.+?)e>
+  validate:
+    - eq: [$str,"itl"]

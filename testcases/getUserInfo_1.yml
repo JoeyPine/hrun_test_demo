@@ -1,0 +1,19 @@
+config:
+    name: 获取用户基本信息_未传入access_token
+    base_url: ${ENV(BASE_URL)}
+    variables:
+        lang: zh_CN
+
+teststeps:
+-
+    name: 未传入access_token
+    api: api/getUserInfo.yml
+    variables:
+        access_token:
+        openid: oRJoI69t26v8Kq6hUeFzm3OMEHFM
+    validate:
+        - eq: ["content.errcode",41001]
+
+
+
+
